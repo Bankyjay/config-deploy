@@ -11,13 +11,12 @@ jobs:
         - run:
             name: install independencies
             command: |
-              export ANSIBLE_HOST_KEY_CHECKING=False
               apk add --update ansible # install dependencies needed for your ansible
 
         - run:
             name: configure server
             command: |
-              ansible-playbook -i inventory main-remote.yml
+              ansible-playbook -i inventory ansible.cfg main-remote.yml 
 workflows:
   myWorkflow:
     jobs:
