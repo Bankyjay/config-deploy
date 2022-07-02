@@ -16,7 +16,9 @@ jobs:
         - run:
             name: configure server
             command: |
-              ansible-playbook -i inventory ansible.cfg main-remote.yml 
+              ansible-playbook -i inventory 
+              export host_key_checking=False 
+              main-remote.yml 
 workflows:
   myWorkflow:
     jobs:
