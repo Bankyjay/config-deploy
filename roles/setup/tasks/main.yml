@@ -1,4 +1,8 @@
 ---
+- name: "ignore hostkey"
+  become: true
+  template:
+    export ANSIBLE_HOST_KEY_CHECKING=False
 - name: "update apt packages."
   become: true
   apt:
