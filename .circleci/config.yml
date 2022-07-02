@@ -7,15 +7,11 @@ jobs:
         - checkout
         - add_ssh_keys:
             fingerprints: [9f:a4:3b:8b:36:0e:70:03:bc:49:fe:e8:cc:66:5d:80]
-
-        - run:
-          name: ignore auth
-          command: | 
-              export ANSIBLE_HOST_KEY_CHECKING=False
             
         - run:
             name: install independencies
             command: |
+              export ANSIBLE_HOST_KEY_CHECKING=False
               apk add --update ansible # install dependencies needed for your ansible
 
         - run:
