@@ -1,4 +1,4 @@
-
+#just EC2 template 
 AWSTemplateFormatVersion: 2010-09-09
 Description: circleci with aws 
 Resources:
