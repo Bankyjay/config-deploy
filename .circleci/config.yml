@@ -24,6 +24,7 @@ jobs:
             name: configure server
             command: |
               ansible-playbook -i inventory main-remote.yml 
+              
 workflows:
   myWorkflow:
     jobs:
