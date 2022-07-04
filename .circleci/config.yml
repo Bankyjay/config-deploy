@@ -1,24 +1,38 @@
 version: 2.1
 jobs:
-  create_infrastructure: 
-      docker:
-        - image: python:3.7-alpine3.11
-      steps:
-        - checkout
-        - add_ssh_keys:
-            fingerprints: ["9f:a4:3b:8b:36:0e:70:03:bc:49:fe:e8:cc:66:5d:80"]
-            
-        - run:
-            name: install independencies
-            command: |
-              apk add --update ansible # install dependencies needed for your ansible
-
-        - run:
-            name: configure server
-            command: |
-              ansible-playbook -i inventory main-remote.yml 
-
+  configure_infrastructure: 
+    docker:
+      - image: python:3.7-alpine3.11
+    steps:
+      - checkout
+      - add_ssh_keys:
+              # You can get this ID in the section where you registered the SSH Key
+              fingerprints: ["9f:a4:3b:8b:36:0e:70:03:bc:49:fe:e8:cc:66:5d:80"] 
+      - run:
+          name: Install Ansible
+          command: |
+            apk add --update ansible
+      - run:
+          name: Run Playbook and Configure server
+          command: |
+            ansible-playbook -i inventory main-remote.yml
+  smoke_test:
+    docker:
+      - image: alpine:latest
+    steps:
+      - run: apk add --update curl
+      - run:
+          name: smoke test
+          command: |
+            URL="https://blog.udacity.com/"
+            if curl -s --head ${URL} 
+            then
+              return 0
+            else
+              return 1
+            fi
 workflows:
   myWorkflow:
     jobs:
-      - create_infrastructure
+      - configure_infrastructure
+      - smoke-test
